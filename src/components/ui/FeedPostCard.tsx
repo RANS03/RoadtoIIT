@@ -390,10 +390,10 @@ export function FeedPostCard({
 
   // Render Featured / Standard / Compact layout configurations
   const paddingClass = post.featured 
-    ? "p-7 md:p-9" 
+    ? "p-4 md:p-9" 
     : post.variant === "compact" 
       ? "p-4 md:p-5" 
-      : "p-6 md:p-7";
+      : "p-4 md:p-7";
 
   return (
     <GlassCard 
@@ -448,7 +448,7 @@ export function FeedPostCard({
       )}
 
       {/* Card Header */}
-      <div className={`flex items-center justify-between mb-4 pl-1 ${post.variant === "compact" ? "mb-3" : ""}`}>
+      <div className={`flex flex-wrap items-start justify-between gap-3 mb-4 pl-1 ${post.variant === "compact" ? "mb-3" : ""}`}>
         <div 
           className={`flex items-center gap-3 ${(!post.isAnonymous && post.author) ? "cursor-pointer group/author" : ""}`}
           onClick={(e) => {
@@ -479,7 +479,7 @@ export function FeedPostCard({
 
           {/* Author metadata */}
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <span className={`font-heading font-medium text-white/80 ${post.variant === 'compact' ? 'text-xs' : 'text-sm'} ${(!post.isAnonymous && post.author) ? "group-hover/author:text-[#00f0ff] transition-colors" : ""}`}>
                 {post.isAnonymous ? "anonymous_operator" : post.author?.name}
               </span>
@@ -511,7 +511,7 @@ export function FeedPostCard({
         </div>
 
         {/* Post Type Pill & Campus context details */}
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <div className="hidden sm:flex flex-col items-end text-right font-mono text-[9px] text-white/20">
             {post.campusDetail && (
               <span className="flex items-center gap-1 text-white/35 font-light">
@@ -843,21 +843,21 @@ export function FeedPostCard({
           </div>
         )}
 
-      {/* Interactions bar */}
-      <div className={`flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/5 pl-1 ${post.variant === 'compact' ? 'pt-3' : ''}`}>
+      <div className={`flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/5 pl-1 ${post.variant === 'compact' ? 'pt-3' : ''}`}>
         {/* Left: Validation Metrics */}
-        <div className="flex items-center gap-5">
+        <div className="flex items-center justify-between w-full sm:w-auto gap-3 sm:gap-5">
           {/* Resonate validation */}
           <button 
             onClick={(e) => {
               e.stopPropagation();
               onLike(post.id);
             }}
-            className="flex items-center gap-1.5 text-[11px] font-mono transition-colors group"
+            className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono transition-colors group"
             style={{ color: post.likedByUser ? "#00f0ff" : "rgba(255,255,255,0.3)" }}
           >
-            <Award className={`w-3.5 h-3.5 group-hover:scale-110 transition-transform ${post.likedByUser ? "text-[#00f0ff]" : ""}`} />
-            <span>{post.likedByUser ? "Resonated" : "Resonate"} • {post.signalStrength}% Strength</span>
+            <Award className={`w-4 h-4 sm:w-3.5 sm:h-3.5 group-hover:scale-110 transition-transform ${post.likedByUser ? "text-[#00f0ff]" : ""}`} />
+            <span className="hidden sm:inline">{post.likedByUser ? "Resonated" : "Resonate"} • </span>
+            <span>{post.signalStrength}%</span>
           </button>
 
           {/* Response Thread trigger */}
@@ -866,10 +866,11 @@ export function FeedPostCard({
               e.stopPropagation();
               setShowComments(!showComments);
             }}
-            className="flex items-center gap-1.5 text-[11px] font-mono text-white/30 hover:text-white/60 transition-colors group"
+            className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono text-white/30 hover:text-white/60 transition-colors group"
           >
-            <MessageSquare className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
-            <span>Responses ({post.comments.length})</span>
+            <MessageSquare className="w-4 h-4 sm:w-3.5 sm:h-3.5 group-hover:scale-110 transition-transform" />
+            <span className="hidden sm:inline">Responses </span>
+            <span>({post.comments.length})</span>
           </button>
 
           {/* Archive save */}
@@ -878,11 +879,11 @@ export function FeedPostCard({
               e.stopPropagation();
               onSave(post.id);
             }}
-            className="flex items-center gap-1.5 text-[11px] font-mono transition-colors group"
+            className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono transition-colors group"
             style={{ color: post.savedByUser ? "#8b5cf6" : "rgba(255,255,255,0.3)" }}
           >
-            <Bookmark className={`w-3.5 h-3.5 group-hover:scale-110 transition-transform ${post.savedByUser ? "fill-[#8b5cf6]" : ""}`} />
-            <span>{post.savedByUser ? "Archived" : "Archive"}</span>
+            <Bookmark className={`w-4 h-4 sm:w-3.5 sm:h-3.5 group-hover:scale-110 transition-transform ${post.savedByUser ? "fill-[#8b5cf6]" : ""}`} />
+            <span className="hidden sm:inline">{post.savedByUser ? "Archived" : "Archive"}</span>
           </button>
 
           {/* Shard Repost */}
@@ -891,10 +892,10 @@ export function FeedPostCard({
               e.stopPropagation();
               handleRepost();
             }}
-            className="flex items-center gap-1.5 text-[11px] font-mono text-white/30 hover:text-white/60 transition-colors group"
+            className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono text-white/30 hover:text-white/60 transition-colors group"
           >
-            <Radio className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
-            <span>Shard Repost</span>
+            <Radio className="w-4 h-4 sm:w-3.5 sm:h-3.5 group-hover:scale-110 transition-transform" />
+            <span className="hidden sm:inline">Shard Repost</span>
           </button>
 
           {/* Challenge Toggle */}
@@ -903,15 +904,15 @@ export function FeedPostCard({
               e.stopPropagation();
               setIsChallenging(!isChallenging);
             }}
-            className="flex items-center gap-1.5 text-[11px] font-mono text-white/30 hover:text-white/60 transition-colors group"
+            className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono text-white/30 hover:text-white/60 transition-colors group"
           >
-            <ShieldAlert className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
-            <span>Challenge</span>
+            <ShieldAlert className="w-4 h-4 sm:w-3.5 sm:h-3.5 group-hover:scale-110 transition-transform" />
+            <span className="hidden sm:inline">Challenge</span>
           </button>
         </div>
 
         {/* Right: Quick Emoji Reactions */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 flex-wrap">
           {post.reactions.map((react) => (
             <button
               key={react.emoji}

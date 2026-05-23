@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import React, { Component, ErrorInfo, ReactNode, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Stars } from "@react-three/drei";
 import type { Group } from "three";
@@ -158,14 +158,47 @@ function checkWebGLSupport(): boolean {
   }
 }
 
+interface ErrorBoundaryProps {
+  children: ReactNode;
+  fallback: ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
+
+class SafeErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(_error: Error): ErrorBoundaryState {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error("WebGL ParticleBackground Canvas Error caught:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
 export function ParticleBackground() {
   const [mounted, setMounted] = useState(false);
-  const [hasWebGL, setHasWebGL] = useState(true);
+  const [useCanvas2D, setUseCanvas2D] = useState(true);
 
   useEffect(() => {
     const rAF = requestAnimationFrame(() => {
       setMounted(true);
-      setHasWebGL(checkWebGLSupport());
+      const isMobile = window.innerWidth < 768;
+      const hasWebGL = checkWebGLSupport();
+      setUseCanvas2D(isMobile || !hasWebGL);
     });
     return () => cancelAnimationFrame(rAF);
   }, []);
@@ -176,12 +209,14 @@ export function ParticleBackground() {
 
   return (
     <div className="pointer-events-none absolute inset-0 z-0 opacity-60">
-      {hasWebGL ? (
-        <Canvas camera={{ position: [0, 0, 1] }}>
-          <Starfield />
-        </Canvas>
-      ) : (
+      {useCanvas2D ? (
         <Canvas2DStarfield />
+      ) : (
+        <SafeErrorBoundary fallback={<Canvas2DStarfield />}>
+          <Canvas camera={{ position: [0, 0, 1] }}>
+            <Starfield />
+          </Canvas>
+        </SafeErrorBoundary>
       )}
     </div>
   );

@@ -16,8 +16,8 @@ export function ConfessionsSection() {
   );
 
   return (
-    <section id="confessions" className="relative py-32 px-4 max-w-6xl mx-auto">
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#8b5cf6]/8 blur-[140px] rounded-full pointer-events-none" />
+    <section id="confessions" className="relative py-12 md:py-32 px-4 max-w-6xl mx-auto overflow-hidden">
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[280px] h-[280px] md:w-[500px] md:h-[500px] bg-[#8b5cf6]/8 blur-[80px] md:blur-[140px] rounded-full pointer-events-none" />
 
       <motion.div
         initial={{ opacity: 0, y: 40 }}
@@ -38,19 +38,18 @@ export function ConfessionsSection() {
         </p>
       </motion.div>
 
-      {/* Filter tabs */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="flex flex-wrap items-center justify-center gap-2 mb-10"
+        className="flex items-center justify-start md:justify-center gap-2 overflow-x-auto scrollbar-none flex-nowrap -mx-4 px-4 mb-8 md:mb-10 md:flex-wrap md:mx-0 md:px-0"
       >
         {confessionTopics.map((t) => (
           <button
             key={t}
             onClick={() => setActiveFilter(t)}
-            className={`text-xs uppercase tracking-widest px-4 py-2 rounded-full border transition-all duration-300 ${
+            className={`text-xs uppercase tracking-widest px-4 py-2 rounded-full border transition-all duration-300 flex-shrink-0 ${
               activeFilter === t
                 ? "border-[#8b5cf6]/60 bg-[#8b5cf6]/20 text-[#8b5cf6]"
                 : "border-white/10 text-white/40 hover:border-white/20 hover:text-white/60"

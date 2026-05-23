@@ -50,8 +50,8 @@ const intel = [
 
 export function IntelligenceHubSection() {
   return (
-    <section id="intelligence" className="relative py-32 px-4 max-w-7xl mx-auto z-10">
-      <div className="absolute left-1/2 -translate-x-1/2 top-0 w-[600px] h-[400px] bg-[#00f0ff]/5 blur-[120px] rounded-full pointer-events-none" />
+    <section id="intelligence" className="relative py-12 md:py-32 px-4 max-w-7xl mx-auto z-10 overflow-hidden">
+      <div className="absolute left-1/2 -translate-x-1/2 top-0 w-[280px] h-[180px] bg-[#00f0ff]/5 blur-[70px] md:blur-[120px] rounded-full pointer-events-none" />
 
       <motion.div
         initial={{ opacity: 0, y: 40 }}

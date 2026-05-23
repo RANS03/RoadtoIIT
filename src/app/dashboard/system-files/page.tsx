@@ -213,7 +213,7 @@ function DossierCard({ dossier }: { dossier: Dossier }) {
 
         {/* ── Card Header (always visible) ── */}
         <div
-          className="p-6 md:p-8 cursor-pointer"
+          className="p-4 md:p-8 cursor-pointer"
           onClick={() => setExpanded((v) => !v)}
         >
           <div className="flex flex-col md:flex-row md:items-start gap-4 justify-between">
@@ -316,12 +316,12 @@ function DossierCard({ dossier }: { dossier: Dossier }) {
             >
               <div className="border-t border-white/5">
                 {/* Tab bar */}
-                <div className="flex gap-0 overflow-x-auto border-b border-white/5 px-6 md:px-8">
+                <div className="flex gap-0 overflow-x-auto border-b border-white/5 px-4 md:px-8 scrollbar-none flex-nowrap">
                   {tabs.map((tab) => (
                     <button
                       key={tab}
                       onClick={() => setActiveTab(tab as typeof activeTab)}
-                      className="relative px-4 py-3 font-mono text-[9px] uppercase tracking-widest whitespace-nowrap transition-colors"
+                      className="relative px-4 py-3 font-mono text-[9px] uppercase tracking-widest whitespace-nowrap transition-colors flex-shrink-0"
                       style={{
                         color:
                           activeTab === tab
@@ -342,7 +342,7 @@ function DossierCard({ dossier }: { dossier: Dossier }) {
                 </div>
 
                 {/* Tab content */}
-                <div className="p-6 md:p-8">
+                <div className="p-4 md:p-8">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={activeTab}
@@ -649,13 +649,13 @@ export default function OperationalDossiersPage() {
     .reduce((sum, d) => sum + d.archivedSignals, 0);
 
   return (
-    <div className="p-6 md:p-10 max-w-5xl mx-auto">
+    <div className="p-4 md:p-10 max-w-5xl mx-auto">
       {/* ── Header ── */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
-        className="mb-12"
+        className="mb-8 md:mb-12"
       >
         <div className="flex items-center gap-3 mb-4">
           <Database className="w-4 h-4 text-white/30" />
@@ -666,7 +666,7 @@ export default function OperationalDossiersPage() {
         <h1 className="font-heading text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
           OPERATIONAL DOSSIERS
         </h1>
-        <p className="text-white/35 text-sm font-light max-w-xl leading-relaxed mb-8">
+        <p className="text-white/35 text-sm font-light max-w-xl leading-relaxed mb-6 md:mb-8">
           Community-powered tactical intelligence hubs. Each dossier is continuously updated by verified operators — not admin-written content.
         </p>
 
@@ -720,12 +720,12 @@ export default function OperationalDossiersPage() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.15 }}
-        className="flex items-center gap-2 flex-wrap mb-10"
+        className="flex overflow-x-auto scrollbar-none flex-nowrap items-center gap-2 mb-6 md:mb-10 -mx-2 px-2 md:mx-0 md:px-0"
       >
         <Filter className="w-3.5 h-3.5 text-white/20 flex-shrink-0" />
         <button
           onClick={() => setActiveTag("all")}
-          className={`font-mono text-[8px] px-3 py-1.5 rounded-full border uppercase tracking-widest transition-all ${
+          className={`font-mono text-[8px] px-3 py-1.5 rounded-full border uppercase tracking-widest transition-all flex-shrink-0 ${
             activeTag === "all"
               ? "border-white/20 text-white/70 bg-white/5"
               : "border-white/8 text-white/25 hover:border-white/15"
@@ -737,7 +737,7 @@ export default function OperationalDossiersPage() {
           <button
             key={tag}
             onClick={() => setActiveTag(tag)}
-            className={`font-mono text-[8px] px-3 py-1.5 rounded-full border uppercase tracking-widest transition-all ${
+            className={`font-mono text-[8px] px-3 py-1.5 rounded-full border uppercase tracking-widest transition-all flex-shrink-0 ${
               activeTag === tag
                 ? "border-white/20 text-white/70 bg-white/5"
                 : "border-white/8 text-white/25 hover:border-white/15"

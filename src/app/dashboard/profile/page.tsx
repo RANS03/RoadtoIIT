@@ -214,7 +214,7 @@ export default function ProfilePage() {
             <div className="flex items-center gap-3 mb-3">
               <User className="w-4 h-4 text-[#8b5cf6]" />
               <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30">
-                Antigravity OS • Identity Dossier Verification
+                ROADTOIIT OS • Identity Dossier Verification
               </span>
             </div>
             <h1 className="font-heading text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight">
@@ -244,7 +244,7 @@ export default function ProfilePage() {
         {/* Left Column: Operator Details & Quick Stats */}
         <div className="lg:col-span-1 space-y-6">
           {profile && (
-            <GlassCard className="p-6 md:p-8 border border-white/5 relative overflow-hidden">
+            <GlassCard className="p-4 md:p-8 border border-white/5 relative overflow-hidden">
               {/* Scanline decoration */}
               <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#8b5cf6]/40 to-transparent animate-scan" />
 
@@ -431,7 +431,7 @@ export default function ProfilePage() {
 
           {/* Dossier Academic Specs */}
           {profile && !isEditing && (
-            <GlassCard className="p-6 border border-white/5 space-y-4">
+            <GlassCard className="p-4 md:p-6 border border-white/5 space-y-4">
               <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#00f0ff] block mb-2">
                 Dossier Academic Specs
               </span>
@@ -506,7 +506,7 @@ export default function ProfilePage() {
 
           {/* QIS Credibility Node & History Audit Logs */}
           {profile && !isEditing && (
-            <GlassCard className="p-6 border border-white/5 space-y-4">
+            <GlassCard className="p-4 md:p-6 border border-white/5 space-y-4">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-emerald-400 block">
                   QIS Credibility Node
@@ -548,10 +548,10 @@ export default function ProfilePage() {
         {/* Right Columns: Contribution & Build Journal tabs */}
         <div className="lg:col-span-2 space-y-6">
           {/* Tab selector */}
-          <div className="flex border-b border-white/5 overflow-x-auto scrollbar-none">
+          <div className="flex border-b border-white/5 overflow-x-auto scrollbar-none flex-nowrap -mx-2 px-2 md:mx-0 md:px-0">
             <button
               onClick={() => setActiveTab("signals")}
-              className={`px-5 py-3.5 font-mono text-xs uppercase tracking-widest border-b-2 transition-all flex items-center gap-2 whitespace-nowrap ${
+              className={`px-5 py-3.5 font-mono text-xs uppercase tracking-widest border-b-2 transition-all flex items-center gap-2 whitespace-nowrap flex-shrink-0 ${
                 activeTab === "signals" 
                   ? "border-[#8b5cf6] text-white" 
                   : "border-transparent text-white/35 hover:text-white/60"
@@ -562,7 +562,7 @@ export default function ProfilePage() {
             </button>
             <button
               onClick={() => setActiveTab("missions")}
-              className={`px-5 py-3.5 font-mono text-xs uppercase tracking-widest border-b-2 transition-all flex items-center gap-2 whitespace-nowrap ${
+              className={`px-5 py-3.5 font-mono text-xs uppercase tracking-widest border-b-2 transition-all flex items-center gap-2 whitespace-nowrap flex-shrink-0 ${
                 activeTab === "missions" 
                   ? "border-[#8b5cf6] text-white" 
                   : "border-transparent text-white/35 hover:text-white/60"
@@ -573,7 +573,7 @@ export default function ProfilePage() {
             </button>
             <button
               onClick={() => setActiveTab("saved")}
-              className={`px-5 py-3.5 font-mono text-xs uppercase tracking-widest border-b-2 transition-all flex items-center gap-2 whitespace-nowrap ${
+              className={`px-5 py-3.5 font-mono text-xs uppercase tracking-widest border-b-2 transition-all flex items-center gap-2 whitespace-nowrap flex-shrink-0 ${
                 activeTab === "saved" 
                   ? "border-[#8b5cf6] text-white" 
                   : "border-transparent text-white/35 hover:text-white/60"
@@ -627,7 +627,7 @@ export default function ProfilePage() {
             {activeTab === "missions" && profile && (
               <div className="space-y-6">
                 {/* 1. Active Missions Tracker */}
-                <GlassCard className="p-6 border border-white/5 space-y-4">
+                <GlassCard className="p-4 md:p-6 border border-white/5 space-y-4">
                   <div>
                     <h3 className="font-heading font-bold text-lg text-white">Active Missions</h3>
                     <p className="text-white/40 text-xs font-light mt-0.5">Focus objectives and milestones currently being sharded.</p>
@@ -677,7 +677,7 @@ export default function ProfilePage() {
                 </GlassCard>
 
                 {/* 2. Build Journal Logging */}
-                <GlassCard className="p-6 border border-white/5 space-y-4">
+                <GlassCard className="p-4 md:p-6 border border-white/5 space-y-4">
                   <div>
                     <h3 className="font-heading font-bold text-lg text-white">Project Build Journal</h3>
                     <p className="text-white/40 text-xs font-light mt-0.5">Log low-level builds, check off tasks, and broadcast progress to the network.</p>

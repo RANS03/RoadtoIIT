@@ -6,8 +6,8 @@ import { GlassCard } from "@/components/ui/GlassCard";
 
 export function RoadmapPreviewSection() {
   return (
-    <section id="roadmap" className="relative py-32 px-4 max-w-7xl mx-auto z-10">
-      <div className="flex flex-col lg:flex-row gap-16 items-center">
+    <section id="roadmap" className="relative py-12 md:py-32 px-4 max-w-7xl mx-auto z-10 overflow-hidden">
+      <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
         <div className="flex-1 w-full relative h-[400px]">
           {/* Abstract Roadmap Visualization */}
           <GlassCard className="absolute inset-0 p-8 flex flex-col justify-center gap-6 overflow-hidden">

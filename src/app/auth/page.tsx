@@ -94,8 +94,8 @@ function AuthPageContent() {
       <ParticleBackground />
 
       {/* Glow effects */}
-      <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-[#00f0ff]/3 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-[#8b5cf6]/3 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[200px] h-[200px] md:w-[300px] md:h-[300px] bg-[#00f0ff]/3 blur-[80px] md:blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[220px] h-[220px] md:w-[350px] md:h-[350px] bg-[#8b5cf6]/3 blur-[80px] md:blur-[120px] rounded-full pointer-events-none" />
 
       {/* Floating Back Link */}
       <motion.button

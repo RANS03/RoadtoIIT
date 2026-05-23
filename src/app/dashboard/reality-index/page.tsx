@@ -23,7 +23,7 @@ function Bar({ value, color, delay }: { value: number; color: string; delay: num
 
 export default function RealityIndexPage() {
   return (
-    <div className="p-8 md:p-12 max-w-6xl mx-auto">
+    <div className="p-4 md:p-12 max-w-6xl mx-auto">
       <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="mb-10">
         <div className="flex items-center gap-3 mb-3">
           <Activity className="w-4 h-4 text-red-400" />
@@ -42,7 +42,7 @@ export default function RealityIndexPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: i * 0.1 }}
-            className="glass-card rounded-2xl p-8 border border-white/5 hover:border-white/10 transition-colors group"
+            className="glass-card rounded-2xl p-5 md:p-8 border border-white/5 hover:border-white/10 transition-colors group"
           >
             <div className="flex items-start justify-between gap-4 mb-5">
               <div>

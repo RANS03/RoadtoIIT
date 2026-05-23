@@ -23,9 +23,9 @@ const briefings = [
 
 export function MissionSection() {
   return (
-    <section id="mission" className="relative py-32 px-4 max-w-6xl mx-auto">
+    <section id="mission" className="relative py-12 md:py-32 px-4 max-w-6xl mx-auto overflow-hidden">
       {/* Ambient glow */}
-      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[#8b5cf6]/10 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[220px] h-[220px] md:w-[400px] md:h-[400px] bg-[#8b5cf6]/10 blur-[60px] md:blur-[120px] rounded-full pointer-events-none" />
 
       <motion.div
         initial={{ opacity: 0, y: 40 }}
@@ -66,7 +66,7 @@ export function MissionSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.8, delay: i * 0.2 }}
-            className="relative glass-card rounded-2xl p-8 border border-white/5 group hover:border-white/10 transition-colors duration-500"
+            className="relative glass-card rounded-2xl p-5 md:p-8 border border-white/5 group hover:border-white/10 transition-colors duration-500"
           >
             {/* Node dot */}
             <div className="absolute top-8 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-[#00f0ff]/50 bg-black group-hover:border-[#00f0ff] group-hover:shadow-[0_0_12px_rgba(0,240,255,0.5)] transition-all duration-500" />

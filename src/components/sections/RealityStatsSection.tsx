@@ -70,8 +70,8 @@ function StatBar({
 
 export function RealityStatsSection() {
   return (
-    <section className="relative py-32 px-4 max-w-6xl mx-auto z-10">
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#00f0ff]/5 blur-[100px] rounded-full pointer-events-none" />
+    <section className="relative py-12 md:py-32 px-4 max-w-6xl mx-auto z-10 overflow-hidden">
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[140px] md:w-[600px] md:h-[300px] bg-[#00f0ff]/5 blur-[60px] md:blur-[100px] rounded-full pointer-events-none" />
 
       <motion.div
         initial={{ opacity: 0, y: 40 }}
@@ -100,7 +100,7 @@ export function RealityStatsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.8, delay: i * 0.15 }}
-            className="glass-card rounded-2xl p-8 border border-white/5 group hover:border-white/10 transition-colors duration-500"
+            className="glass-card rounded-2xl p-5 md:p-8 border border-white/5 group hover:border-white/10 transition-colors duration-500"
           >
             <div className="flex items-end justify-between mb-5">
               <div>

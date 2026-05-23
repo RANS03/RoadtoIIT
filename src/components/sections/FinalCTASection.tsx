@@ -20,12 +20,12 @@ export function FinalCTASection() {
         />
       )}
 
-      <section className="relative min-h-[70vh] flex items-center justify-center py-32 px-4 z-10 overflow-hidden">
+      <section className="relative min-h-0 md:min-h-[70vh] flex items-center justify-center py-12 md:py-32 px-4 z-10 overflow-hidden w-full">
         {/* Background atmosphere */}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-transparent pointer-events-none" />
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-[#8b5cf6]/8 blur-[140px] rounded-full pointer-events-none" />
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[200px] bg-[#00f0ff]/5 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[200px] md:w-[700px] md:h-[400px] bg-[#8b5cf6]/8 blur-[80px] md:blur-[140px] rounded-full pointer-events-none" />
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[100px] md:w-[400px] md:h-[200px] bg-[#00f0ff]/5 blur-[60px] md:blur-[100px] rounded-full pointer-events-none" />
 
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -48,7 +48,7 @@ export function FinalCTASection() {
             </span>
           </motion.div>
 
-          <h2 className="font-heading text-5xl md:text-7xl font-bold mb-6 text-white leading-tight tracking-tight">
+          <h2 className="font-heading text-4xl md:text-7xl font-bold mb-6 text-white leading-tight tracking-tight">
             See clearly.{" "}
             <br className="hidden md:block" />
             <span
@@ -61,7 +61,7 @@ export function FinalCTASection() {
             </span>
           </h2>
 
-          <p className="text-white/40 text-lg mb-14 font-light max-w-xl mx-auto leading-relaxed">
+          <p className="text-white/40 text-sm md:text-lg mb-8 md:mb-14 font-light max-w-xl mx-auto leading-relaxed">
             Stop chasing an illusion. Start understanding the system. The intelligence network is ready.
           </p>
 

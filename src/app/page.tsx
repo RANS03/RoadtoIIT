@@ -150,7 +150,7 @@ const INITIAL_CAMPUS = [
 ───────────────────────────────────────── */
 function SectionDivider({ color = "white" }: { color?: string }) {
   return (
-    <div className="max-w-5xl mx-auto px-4 my-24 flex items-center gap-4">
+    <div className="max-w-5xl mx-auto px-4 my-10 md:my-24 flex items-center gap-4">
       <div className="flex-1 h-px bg-gradient-to-r from-transparent to-white/5" />
       <div className="flex items-center gap-1.5 font-mono text-[8px] tracking-widest text-white/15 uppercase">
         <span className="w-1 h-1 rounded-full bg-white/20" />
@@ -318,30 +318,33 @@ export default function Home() {
       {/* ══════════════════════════════════════
           METRICS BAR
       ══════════════════════════════════════ */}
-      <section className="relative z-10 max-w-5xl mx-auto w-full px-4 -mt-8 mb-20">
+      {/* ══════════════════════════════════════
+          METRICS BAR
+      ══════════════════════════════════════ */}
+      <section className="relative z-10 max-w-5xl mx-auto w-full px-4 -mt-8 mb-10 md:mb-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 2 }}
-          className="relative border border-white/[0.06] bg-white/[0.015] backdrop-blur-xl rounded-2xl p-6 md:p-8 overflow-hidden"
+          className="relative border border-white/[0.06] bg-white/[0.015] backdrop-blur-xl rounded-2xl p-4 md:p-8 overflow-hidden"
         >
           {/* top scan-line */}
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00f0ff]/40 to-transparent" />
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0 divide-y md:divide-y-0 md:divide-x divide-white/5">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-0 divide-y md:divide-y-0 md:divide-x divide-white/5">
             {[
               { label: "Active Operators", value: activeOperators.toLocaleString(), color: "#00f0ff", icon: Activity, live: true },
               { label: "Signals Today",    value: signalsToday.toString(),           color: "#ffffff", icon: Signal,   live: false },
               { label: "Live Threads",     value: liveThreads.toString(),            color: "#8b5cf6", icon: Radio,    live: true },
               { label: "Active Campuses",  value: activeCampuses.toString(),         color: "#10b981", icon: Globe,    live: false },
             ].map(({ label, value, color, icon: Icon, live }) => (
-              <div key={label} className="flex flex-col items-center md:px-8 py-3 md:py-0 gap-2">
+              <div key={label} className="flex flex-col items-center md:px-8 py-2 md:py-0 gap-1.5 md:gap-2">
                 <div className="flex items-center gap-2 text-[9px] font-mono text-white/30 uppercase tracking-widest">
                   <Icon className="w-3 h-3" style={{ color }} />
                   <span>{label}</span>
                   {live && <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: color }} />}
                 </div>
-                <span className="text-2xl md:text-3xl font-bold tracking-tight" style={{ color }}>
+                <span className="text-xl md:text-3xl font-bold tracking-tight" style={{ color }}>
                   {value}
                 </span>
               </div>
@@ -361,18 +364,18 @@ export default function Home() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-14"
+          className="text-center mb-8 md:mb-14"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#00f0ff]/20 bg-[#00f0ff]/5 mb-5">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#00f0ff]/20 bg-[#00f0ff]/5 mb-4 md:mb-5">
             <Radio className="w-3.5 h-3.5 text-[#00f0ff] animate-pulse" />
             <span className="font-mono text-[9px] text-[#00f0ff] uppercase tracking-[0.25em]">
               Grid Network Output • Live
             </span>
           </div>
-          <h2 className="font-heading text-4xl md:text-5xl font-bold text-white tracking-tight mb-3">
+          <h2 className="font-heading text-3xl md:text-5xl font-bold text-white tracking-tight mb-2 md:mb-3">
             LIVE INTELLIGENCE STREAM
           </h2>
-          <p className="text-white/40 text-sm font-light max-w-md mx-auto leading-relaxed">
+          <p className="text-white/40 text-xs md:text-sm font-light max-w-md mx-auto leading-relaxed">
             Realtime operational signals from operators across the network — decrypted and broadcast as received.
           </p>
         </motion.div>
@@ -469,34 +472,34 @@ export default function Home() {
       {/* ══════════════════════════════════════
           TRENDING DOSSIERS
       ══════════════════════════════════════ */}
-      <section id="trending" className="max-w-6xl mx-auto w-full px-4 mb-8 scroll-mt-24">
+      <section id="trending" className="max-w-6xl mx-auto w-full px-4 mb-6 md:mb-8 scroll-mt-24">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-3"
+          className="flex flex-col md:flex-row md:items-end justify-between mb-6 md:mb-10 gap-3"
         >
           <div>
             <span className="font-mono text-[9px] text-[#8b5cf6] uppercase tracking-[0.25em] block mb-2 font-semibold">
               High-Signal Briefings
             </span>
-            <h2 className="font-heading text-4xl font-bold text-white tracking-tight">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-white tracking-tight">
               TRENDING OPERATIONAL DOSSIERS
             </h2>
           </div>
-          <p className="text-white/30 text-[10px] font-mono max-w-xs md:text-right leading-relaxed">
+          <p className="text-white/35 text-[10px] font-mono max-w-xs md:text-right leading-relaxed">
             Most-accessed intelligence archives · Updated in realtime
           </p>
         </motion.div>
 
         {/* Scroll hint */}
-        <div className="flex items-center gap-2 mb-6 font-mono text-[9px] text-white/20">
+        <div className="flex items-center gap-2 mb-4 font-mono text-[9px] text-white/20">
           <ChevronDown className="w-3 h-3 rotate-[-90deg]" />
           <span className="uppercase tracking-widest">Swipe to decrypt more dossiers</span>
         </div>
 
-        <div className="flex gap-5 overflow-x-auto pb-4 -mx-4 px-4 scrollbar-none snap-x snap-mandatory">
+        <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 scrollbar-none snap-x snap-mandatory">
           {TRENDING.map((d, idx) => (
             <motion.div
               key={idx}
@@ -505,7 +508,7 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.08 }}
               onClick={() => { track(); router.push("/auth"); }}
-              className="group relative min-w-[280px] md:min-w-[300px] flex-shrink-0 snap-start p-6 rounded-2xl border border-white/5 bg-white/[0.01] hover:border-white/10 hover:bg-white/[0.025] transition-all duration-400 cursor-pointer"
+              className="group relative min-w-[260px] md:min-w-[300px] flex-shrink-0 snap-start p-5 md:p-6 rounded-2xl border border-white/5 bg-white/[0.01] hover:border-white/10 hover:bg-white/[0.025] transition-all duration-400 cursor-pointer"
               style={{ boxShadow: `0 0 0 1px transparent` }}
             >
               {/* Color accent top line */}
@@ -516,14 +519,14 @@ export default function Home() {
 
               {/* Category pill */}
               <div
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[8px] font-mono uppercase tracking-widest mb-5 border"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[8px] font-mono uppercase tracking-widest mb-4 md:mb-5 border"
                 style={{ borderColor: `${d.color}30`, backgroundColor: `${d.color}08`, color: d.color }}
               >
                 <Cpu className="w-2.5 h-2.5" />
                 DOSSIER #{idx + 101}
               </div>
 
-              <h4 className="font-heading text-base font-bold text-white mb-6 leading-snug group-hover:text-white/90">
+              <h4 className="font-heading text-sm md:text-base font-bold text-white mb-4 md:mb-6 leading-snug group-hover:text-white/90">
                 {d.title}
               </h4>
 
@@ -554,7 +557,7 @@ export default function Home() {
           {/* Join CTA card */}
           <div
             onClick={() => router.push("/auth")}
-            className="group min-w-[200px] flex-shrink-0 snap-start flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-white/10 hover:border-white/25 transition-all duration-300 cursor-pointer px-8"
+            className="group min-w-[180px] flex-shrink-0 snap-start flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-white/10 hover:border-white/25 transition-all duration-300 cursor-pointer px-6 md:px-8"
           >
             <div className="w-12 h-12 rounded-2xl border border-white/10 flex items-center justify-center group-hover:border-[#00f0ff]/30 group-hover:bg-[#00f0ff]/5 transition-all">
               <Shield className="w-5 h-5 text-white/30 group-hover:text-[#00f0ff] transition-colors" />
@@ -571,21 +574,21 @@ export default function Home() {
       {/* ══════════════════════════════════════
           CAMPUS GRID
       ══════════════════════════════════════ */}
-      <section id="campus-grid" className="max-w-6xl mx-auto w-full px-4 scroll-mt-24 mb-24">
+      <section id="campus-grid" className="max-w-6xl mx-auto w-full px-4 scroll-mt-24 mb-12 md:mb-24">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-14"
+          className="text-center mb-8 md:mb-14"
         >
           <span className="font-mono text-[9px] text-[#10b981] uppercase tracking-[0.25em] block mb-2 font-semibold">
             Live Topology Map
           </span>
-          <h2 className="font-heading text-4xl font-bold text-white tracking-tight mb-3">
+          <h2 className="font-heading text-3xl md:text-4xl font-bold text-white tracking-tight mb-2 md:mb-3">
             ACTIVE CAMPUS GRID
           </h2>
-          <p className="text-white/35 text-sm font-light max-w-md mx-auto">
+          <p className="text-white/35 text-xs md:text-sm font-light max-w-md mx-auto">
             Realtime signal streams and active node counts from engineering colleges on the grid.
           </p>
         </motion.div>

@@ -65,8 +65,8 @@ export function MissionPathwaysSection() {
   const [active, setActive] = useState<string | null>(null);
 
   return (
-    <section id="pathways" className="relative py-32 px-4 max-w-7xl mx-auto z-10">
-      <div className="absolute right-0 top-1/3 w-[500px] h-[500px] bg-[#8b5cf6]/6 blur-[140px] rounded-full pointer-events-none" />
+    <section id="pathways" className="relative py-12 md:py-32 px-4 max-w-7xl mx-auto z-10 overflow-hidden">
+      <div className="absolute right-0 top-1/3 w-[250px] h-[250px] bg-[#8b5cf6]/6 blur-[70px] md:blur-[140px] rounded-full pointer-events-none" />
 
       <motion.div
         initial={{ opacity: 0, y: 40 }}

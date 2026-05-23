@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GlowButton } from "@/components/ui/GlowButton";
 import { ParticleBackground } from "@/components/background/ParticleBackground";
 import { GridOverlay } from "@/components/background/GridOverlay";
@@ -14,6 +14,18 @@ export function HeroSection() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
+  const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const handleEnter = () => {
     setLoading(true);
@@ -31,7 +43,7 @@ export function HeroSection() {
     <>
       {loading && <AccessLoader onComplete={handleLoadComplete} />}
 
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      <section className="relative min-h-0 md:min-h-screen flex items-center justify-center overflow-hidden pt-16 md:pt-20 pb-4 md:pb-0 w-full overflow-x-hidden">
         <AmbientLight />
         <GridOverlay />
         <ParticleBackground />
@@ -42,29 +54,29 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="mb-8 px-4 py-1.5 rounded-full border border-white/10 glass-panel flex items-center gap-3"
+            className="hidden md:flex mb-8 px-4 py-1.5 rounded-full border border-white/10 glass-panel items-center gap-3"
           >
             <div className="w-2 h-2 rounded-full bg-[#00f0ff] animate-pulse" />
             <span className="text-xs uppercase tracking-[0.2em] text-white/70">
               Network Online • Classified Access
             </span>
             <div className="w-px h-3 bg-white/20" />
-            <span className="text-xs font-mono text-white/40">ANTIGRAVITY OS</span>
+            <span className="text-xs font-mono text-white/40">ROADTOIIT OS</span>
           </motion.div>
 
           {/* Massive Title */}
           <motion.h1
-            initial={{ opacity: 0, scale: 0.92, filter: "blur(12px)" }}
-            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            initial={{ opacity: 0, scale: 0.92, filter: (mounted && isMobile) ? "none" : "blur(12px)" }}
+            animate={{ opacity: 1, scale: 1, filter: (mounted && isMobile) ? "none" : "blur(0px)" }}
             transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
-            className="font-heading text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter leading-none mb-4"
+            className="font-heading text-4xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter leading-none mb-2 md:mb-4 mt-4 md:mt-0"
             style={{
               background: "linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.2) 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
               textShadow: "none",
-              filter: "drop-shadow(0 0 60px rgba(255,255,255,0.15))",
+              filter: (mounted && isMobile) ? "none" : "drop-shadow(0 0 60px rgba(255,255,255,0.15))",
             }}
           >
             ROADTOIIT
@@ -75,9 +87,9 @@ export function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.8 }}
-            className="mb-10 text-[10px] uppercase tracking-[0.4em] text-white/25 font-mono"
+            className="hidden md:block mb-10 text-[10px] uppercase tracking-[0.4em] text-white/25 font-mono"
           >
-            Powered by Antigravity
+            OPERATIONAL CORE v2.0
           </motion.div>
 
           {/* Emotional Subtitle */}
@@ -85,7 +97,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.7 }}
-            className="text-lg md:text-xl text-white/75 max-w-2xl mx-auto mb-4 font-light tracking-wide leading-relaxed"
+            className="text-sm md:text-xl text-white/75 max-w-2xl mx-auto mb-4 md:mb-4 font-light tracking-wide leading-relaxed"
           >
             The operational truth layer beneath engineering education.
           </motion.p>
@@ -94,7 +106,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.9 }}
-            className="text-sm md:text-base text-white/40 max-w-xl mx-auto mb-14 font-light tracking-wider"
+            className="hidden md:block text-xs md:text-base text-white/40 max-w-xl mx-auto mb-14 font-light tracking-wider"
           >
             Live student intelligence. Tactical survival systems. Real engineering pathways.
           </motion.p>
@@ -104,10 +116,10 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.1 }}
-            className="flex flex-col sm:flex-row items-center gap-5 justify-center"
+            className="flex flex-col sm:flex-row items-center gap-3 justify-center w-full sm:w-auto"
           >
             <GlowButton
-              className="text-xs tracking-[0.2em] uppercase px-8 py-4 font-bold shadow-[0_0_20px_rgba(0,240,255,0.15)] hover:shadow-[0_0_30px_rgba(0,240,255,0.3)] transition-shadow duration-300"
+              className="text-xs tracking-[0.2em] uppercase px-8 py-4 font-bold shadow-[0_0_20px_rgba(0,240,255,0.15)] hover:shadow-[0_0_30px_rgba(0,240,255,0.3)] transition-shadow duration-300 w-full sm:w-auto"
               onClick={handleEnter}
             >
               ACCESS LIVE INTELLIGENCE
@@ -117,7 +129,7 @@ export function HeroSection() {
                 const el = document.getElementById("live-stream");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
               }}
-              className="text-xs tracking-[0.2em] uppercase px-8 py-4.5 border border-white/10 rounded-xl bg-white/2 text-white/70 hover:text-white hover:border-white/20 transition-all font-semibold font-mono hover:scale-105"
+              className="text-xs tracking-[0.2em] uppercase px-8 py-4.5 border border-white/10 rounded-xl bg-white/2 text-white/70 hover:text-white hover:border-white/20 transition-all font-semibold font-mono hover:scale-105 w-full sm:w-auto"
             >
               VIEW LIVE SIGNALS
             </button>

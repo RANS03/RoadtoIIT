@@ -54,7 +54,7 @@ export default function IntelligenceHubPage() {
   const activeDilemma = dilemmas.find(d => d.id === selectedDilemma) || dilemmas[0];
 
   return (
-    <div className="p-6 md:p-10 max-w-6xl mx-auto space-y-8">
+    <div className="p-4 md:p-10 max-w-6xl mx-auto space-y-6 md:space-y-8">
       {/* Page Header */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }} 
@@ -74,7 +74,7 @@ export default function IntelligenceHubPage() {
       </motion.div>
 
       {/* Tab Navigation */}
-      <div className="flex flex-wrap gap-1.5 p-1 bg-white/[0.02] border border-white/5 rounded-xl">
+      <div className="flex overflow-x-auto scrollbar-none flex-nowrap gap-1.5 p-1 bg-white/[0.02] border border-white/5 rounded-xl -mx-2 px-2 md:mx-0 md:px-1">
         {(
           [
             { id: "briefs", label: "Tactical Briefs", icon: Compass },
@@ -89,7 +89,7 @@ export default function IntelligenceHubPage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-mono transition-all relative ${
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-mono transition-all relative flex-shrink-0 ${
                 isActive 
                   ? "text-white" 
                   : "text-white/40 hover:text-white/70 hover:bg-white/[0.01]"
@@ -234,15 +234,15 @@ export default function IntelligenceHubPage() {
             {activeTab === "decisions" && (
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-7">
                 {/* Dilemmas Select List */}
-                <div className="lg:col-span-4 space-y-2.5">
-                  <span className="font-mono text-[9px] uppercase tracking-wider text-white/30 block px-1">Active Dilemmas</span>
+                <div className="lg:col-span-4 flex lg:flex-col overflow-x-auto scrollbar-none flex-nowrap gap-2.5 pb-2 lg:pb-0 mb-4 lg:mb-0 -mx-2 px-2 lg:mx-0 lg:px-0">
+                  <span className="font-mono text-[9px] uppercase tracking-wider text-white/30 block px-1 flex-shrink-0 self-center lg:self-start">Active Dilemmas</span>
                   {dilemmas.map((dilemma) => {
                     const isSelected = selectedDilemma === dilemma.id;
                     return (
                       <button
                         key={dilemma.id}
                         onClick={() => setSelectedDilemma(dilemma.id)}
-                        className={`w-full p-4 rounded-xl text-left border transition-all duration-300 ${
+                        className={`w-auto min-w-[200px] lg:w-full p-3 lg:p-4 rounded-xl text-left border transition-all duration-300 flex-shrink-0 lg:flex-shrink ${
                           isSelected 
                             ? "bg-white/[0.03] border-white/15 text-white" 
                             : "bg-transparent border-white/5 text-white/50 hover:border-white/10 hover:text-white/80"

@@ -42,7 +42,7 @@ function FeedShimmer() {
   return (
     <div className="space-y-5">
       {[1, 2].map((i) => (
-        <div key={i} className="glass-card rounded-2xl p-6 md:p-7 border border-white/5 space-y-4 animate-pulse">
+        <div key={i} className="glass-card rounded-2xl p-4 md:p-7 border border-white/5 space-y-4 animate-pulse">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-white/5" />
@@ -692,7 +692,7 @@ export default function DashboardPage() {
           <div className="flex items-center gap-3 mb-3">
             <Radio className="w-4 h-4 text-[#00f0ff] animate-pulse" />
             <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30">
-              Antigravity OS • Live Node Connection
+              ROADTOIIT OS • Live Node Connection
             </span>
           </div>
           <h1 className="font-heading text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight">
@@ -750,7 +750,7 @@ export default function DashboardPage() {
 
             {/* Filter Pills & High Signal Toggle */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-2">
-              <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none flex-wrap">
+              <div className="flex items-center gap-2 overflow-x-auto pb-1.5 scrollbar-none flex-nowrap -mx-2 px-2">
                 <Filter className="w-3.5 h-3.5 text-white/20 mr-1 flex-shrink-0" />
                 {filterTabs.map((tab) => (
                   <button

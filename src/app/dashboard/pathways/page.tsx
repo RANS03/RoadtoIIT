@@ -161,9 +161,9 @@ function PathwayCard({ pathway }: { pathway: Pathway }) {
       {/* ── Header ── */}
       <button
         onClick={() => setExpanded((v) => !v)}
-        className="w-full flex items-start justify-between p-6 md:p-8 text-left"
+        className="w-full flex items-start justify-between p-4 md:p-8 text-left"
       >
-        <div className="flex items-start gap-5 flex-1 min-w-0">
+        <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-5 flex-1 min-w-0">
           {/* Code badge */}
           <span
             className="font-mono text-[9px] px-2.5 py-1.5 rounded-lg border uppercase tracking-widest flex-shrink-0 mt-0.5"
@@ -229,7 +229,7 @@ function PathwayCard({ pathway }: { pathway: Pathway }) {
           >
             <div className="border-t border-white/5">
               {/* Tab bar — scrollable */}
-              <div className="flex overflow-x-auto border-b border-white/5 px-6 md:px-8 scrollbar-none">
+              <div className="flex overflow-x-auto border-b border-white/5 px-4 md:px-8 scrollbar-none flex-nowrap">
                 {TABS.map(({ id, label, icon: Icon }) => (
                   <button
                     key={id}
@@ -253,7 +253,7 @@ function PathwayCard({ pathway }: { pathway: Pathway }) {
               </div>
 
               {/* Tab content */}
-              <div className="p-6 md:p-8">
+              <div className="p-4 md:p-8">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeTab}
@@ -732,13 +732,13 @@ export default function PathwaysPage() {
   });
 
   return (
-    <div className="p-6 md:p-10 max-w-5xl mx-auto">
+    <div className="p-4 md:p-10 max-w-5xl mx-auto">
       {/* ── Header ── */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
-        className="mb-12"
+        className="mb-8 md:mb-12"
       >
         <div className="flex items-center gap-3 mb-4">
           <Compass className="w-4 h-4 text-white/30" />
@@ -749,7 +749,7 @@ export default function PathwaysPage() {
         <h1 className="font-heading text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
           MISSION PATHWAYS
         </h1>
-        <p className="text-white/35 text-sm font-light max-w-xl leading-relaxed mb-8">
+        <p className="text-white/35 text-sm font-light max-w-xl leading-relaxed mb-6 md:mb-8">
           Living operational ecosystems — not static roadmaps. Each pathway evolves continuously through verified operator intelligence.
         </p>
 
@@ -803,14 +803,14 @@ export default function PathwaysPage() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.15 }}
-        className="flex flex-wrap gap-2 mb-10"
+        className="flex overflow-x-auto scrollbar-none flex-nowrap gap-2 mb-6 md:mb-10 -mx-2 px-2 md:mx-0 md:px-0"
       >
         {["all", "ai systems", "research", "startup", "quant", "core engg", "academic"].map(
           (f) => (
             <button
               key={f}
               onClick={() => setActiveFilter(f)}
-              className={`font-mono text-[8px] px-3 py-1.5 rounded-full border uppercase tracking-widest transition-all ${
+              className={`font-mono text-[8px] px-3 py-1.5 rounded-full border uppercase tracking-widest transition-all flex-shrink-0 ${
                 activeFilter === f
                   ? "border-white/20 text-white/70 bg-white/5"
                   : "border-white/8 text-white/25 hover:border-white/15"
