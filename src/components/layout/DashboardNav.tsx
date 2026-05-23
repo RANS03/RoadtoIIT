@@ -4,30 +4,34 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  LayoutDashboard,
   Shield,
   Activity,
   Network,
   Compass,
-  FileText,
+  Database,
   LogOut,
   Sparkles,
   ChevronRight,
+  Radio,
+  User,
 } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 const navItems = [
-  { icon: LayoutDashboard, label: "Overview", href: "/dashboard" },
-  { icon: FileText, label: "System Files", href: "/dashboard/system-files" },
+  { icon: Radio, label: "Intelligence Stream", href: "/dashboard" },
   { icon: Shield, label: "Survivor Logs", href: "/dashboard/survivor-logs" },
+  { icon: Database, label: "Dossiers", href: "/dashboard/system-files" },
+  { icon: Compass, label: "Mission Pathways", href: "/dashboard/pathways" },
   { icon: Activity, label: "Reality Index", href: "/dashboard/reality-index" },
   { icon: Network, label: "Intelligence Hub", href: "/dashboard/intelligence" },
-  { icon: Compass, label: "Mission Pathways", href: "/dashboard/pathways" },
+  { icon: User, label: "Operator Dossier", href: "/dashboard/profile" },
 ];
 
 export function DashboardNav() {
   const pathname = usePathname();
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
+  const { logout } = useAuth();
 
   return (
     <motion.aside
@@ -110,7 +114,7 @@ export function DashboardNav() {
           {!collapsed && <span>Collapse</span>}
         </button>
         <button
-          onClick={() => router.push("/")}
+          onClick={logout}
           className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/30 hover:text-white/60 hover:bg-white/5 transition-all text-xs tracking-wide"
         >
           <LogOut className="w-4 h-4 flex-shrink-0" />

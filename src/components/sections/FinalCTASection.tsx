@@ -5,14 +5,20 @@ import { GlowButton } from "@/components/ui/GlowButton";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AccessLoader } from "@/components/animations/AccessLoader";
+import { useAuth } from "@/context/AuthContext";
 
 export function FinalCTASection() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
 
   return (
     <>
-      {loading && <AccessLoader onComplete={() => router.push("/dashboard")} />}
+      {loading && (
+        <AccessLoader
+          onComplete={() => router.push(user ? "/dashboard" : "/auth")}
+        />
+      )}
 
       <section className="relative min-h-[70vh] flex items-center justify-center py-32 px-4 z-10 overflow-hidden">
         {/* Background atmosphere */}

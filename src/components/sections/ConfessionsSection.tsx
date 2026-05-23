@@ -4,46 +4,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Shield } from "lucide-react";
+import { confessions, confessionTopics } from "@/data/confessions";
 
-const topics = ["All", "Burnout", "Placements", "Identity", "Loneliness", "Coding"];
-
-const logs = [
-  {
-    id: "LOG-001",
-    topic: "Identity",
-    text: "I got IIT. Then realized I had no idea who I was without the exam. Three years of my life had one goal. On day one of campus, that goal was gone.",
-  },
-  {
-    id: "LOG-002",
-    topic: "Loneliness",
-    text: "Hostel corridors become strangely lonely at 2AM. Everyone looks like they have it figured out. Nobody does. We're all just performing confidence.",
-  },
-  {
-    id: "LOG-003",
-    topic: "Placements",
-    text: "The placement numbers don't show the anxiety behind them. One offer letter for every 8 breakdowns. That math doesn't make it into the brochure.",
-  },
-  {
-    id: "LOG-004",
-    topic: "Burnout",
-    text: "Nobody tells you how quiet success feels after JEE. The noise stops and you're just... empty. You forgot to build a self alongside the rank.",
-  },
-  {
-    id: "LOG-005",
-    topic: "Coding",
-    text: "Everyone on campus codes. But 80% are grinding Leetcode for the same 5 SDE roles. Nobody is building anything. It's just interview theater.",
-  },
-  {
-    id: "LOG-006",
-    topic: "Identity",
-    text: "My branch is considered dead. Every conversation at home becomes a defense of a decision I didn't fully understand when I made it at 17.",
-  },
-];
+const previewLogs = confessions.slice(0, 6);
 
 export function ConfessionsSection() {
   const [activeFilter, setActiveFilter] = useState("All");
 
-  const filtered = logs.filter(
+  const filtered = previewLogs.filter(
     (l) => activeFilter === "All" || l.topic === activeFilter
   );
 
@@ -78,7 +46,7 @@ export function ConfessionsSection() {
         transition={{ duration: 0.8, delay: 0.2 }}
         className="flex flex-wrap items-center justify-center gap-2 mb-10"
       >
-        {topics.map((t) => (
+        {confessionTopics.map((t) => (
           <button
             key={t}
             onClick={() => setActiveFilter(t)}

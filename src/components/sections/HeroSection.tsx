@@ -8,18 +8,23 @@ import { ParticleBackground } from "@/components/background/ParticleBackground";
 import { GridOverlay } from "@/components/background/GridOverlay";
 import { AmbientLight } from "@/components/background/AmbientLight";
 import { AccessLoader } from "@/components/animations/AccessLoader";
-import { ChevronDown } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 export function HeroSection() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
 
   const handleEnter = () => {
     setLoading(true);
   };
 
   const handleLoadComplete = () => {
-    router.push("/dashboard");
+    if (user) {
+      router.push("/dashboard");
+    } else {
+      router.push("/auth");
+    }
   };
 
   return (
@@ -80,18 +85,18 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.7 }}
-            className="text-lg md:text-xl text-white/50 max-w-2xl mx-auto mb-4 font-light tracking-wide leading-relaxed"
+            className="text-lg md:text-xl text-white/75 max-w-2xl mx-auto mb-4 font-light tracking-wide leading-relaxed"
           >
-            The truth layer beneath the education system.
+            The operational truth layer beneath engineering education.
           </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.9 }}
-            className="text-sm md:text-base text-white/30 max-w-xl mx-auto mb-14 font-light tracking-widest uppercase"
+            className="text-sm md:text-base text-white/40 max-w-xl mx-auto mb-14 font-light tracking-wider"
           >
-            Understand the system. Navigate it intelligently.
+            Live student intelligence. Tactical survival systems. Real engineering pathways.
           </motion.p>
 
           {/* CTA */}
@@ -99,37 +104,27 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.1 }}
-            className="flex flex-col items-center gap-4"
+            className="flex flex-col sm:flex-row items-center gap-5 justify-center"
           >
             <GlowButton
-              className="text-sm tracking-[0.25em] uppercase px-12 py-5"
+              className="text-xs tracking-[0.2em] uppercase px-8 py-4 font-bold shadow-[0_0_20px_rgba(0,240,255,0.15)] hover:shadow-[0_0_30px_rgba(0,240,255,0.3)] transition-shadow duration-300"
               onClick={handleEnter}
             >
-              Enter The Network
+              ACCESS LIVE INTELLIGENCE
             </GlowButton>
-            <span className="text-xs text-white/20 tracking-widest font-mono">
-              NO REGISTRATION REQUIRED
-            </span>
+            <button
+              onClick={() => {
+                const el = document.getElementById("live-stream");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="text-xs tracking-[0.2em] uppercase px-8 py-4.5 border border-white/10 rounded-xl bg-white/2 text-white/70 hover:text-white hover:border-white/20 transition-all font-semibold font-mono hover:scale-105"
+            >
+              VIEW LIVE SIGNALS
+            </button>
           </motion.div>
         </div>
 
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.5, duration: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        >
-          <span className="text-[10px] uppercase tracking-[0.3em] text-white/25">
-            Scroll to Explore
-          </span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <ChevronDown className="w-4 h-4 text-white/25" />
-          </motion.div>
-        </motion.div>
+
       </section>
     </>
   );
