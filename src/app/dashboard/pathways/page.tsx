@@ -732,7 +732,7 @@ export default function PathwaysPage() {
   });
 
   return (
-    <div className="p-4 md:p-10 max-w-5xl mx-auto">
+    <div className="py-4 md:p-10 max-w-5xl mx-auto">
       {/* ── Header ── */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}

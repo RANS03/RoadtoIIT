@@ -160,7 +160,7 @@ export default function OperatorProfilePage() {
   });
 
   return (
-    <div className="p-4 md:p-10 max-w-6xl mx-auto">
+    <div className="py-4 md:p-10 max-w-6xl mx-auto">
       {/* Navigation Return */}
       <div className="mb-8">
         <button

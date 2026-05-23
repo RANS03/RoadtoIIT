@@ -54,7 +54,7 @@ export default function IntelligenceHubPage() {
   const activeDilemma = dilemmas.find(d => d.id === selectedDilemma) || dilemmas[0];
 
   return (
-    <div className="p-4 md:p-10 max-w-6xl mx-auto space-y-6 md:space-y-8">
+    <div className="py-4 md:p-10 max-w-6xl mx-auto space-y-6 md:space-y-8">
       {/* Page Header */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }} 

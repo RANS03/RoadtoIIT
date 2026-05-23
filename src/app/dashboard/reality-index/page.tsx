@@ -23,7 +23,7 @@ function Bar({ value, color, delay }: { value: number; color: string; delay: num
 
 export default function RealityIndexPage() {
   return (
-    <div className="p-4 md:p-12 max-w-6xl mx-auto">
+    <div className="py-4 md:p-12 max-w-6xl mx-auto">
       <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="mb-10">
         <div className="flex items-center gap-3 mb-3">
           <Activity className="w-4 h-4 text-red-400" />

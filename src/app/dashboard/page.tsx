@@ -681,7 +681,7 @@ export default function DashboardPage() {
   const activeDirectives = getStrategicDirectives();
 
   return (
-    <div className="p-4 md:p-10 max-w-7xl mx-auto">
+    <div className="py-4 md:p-10 max-w-7xl mx-auto">
       {/* Header Area */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
         <motion.div 
@@ -786,7 +786,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Posts Feed Timeline */}
-          <div className="space-y-6">
+          <div className="space-y-4 md:space-y-6">
             {isLoading ? (
               <FeedShimmer />
             ) : (
@@ -1214,7 +1214,7 @@ export default function DashboardPage() {
       </AnimatePresence>
 
       {/* Notifications overlay container */}
-      <div className="fixed bottom-5 right-5 z-50 space-y-3 max-w-sm pointer-events-none select-none">
+      <div className="fixed bottom-20 lg:bottom-5 right-5 z-[60] space-y-3 max-w-sm pointer-events-none select-none">
         <AnimatePresence>
           {notifications.map(notif => (
             <motion.div

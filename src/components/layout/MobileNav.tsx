@@ -7,8 +7,10 @@ import {
   Shield,
   Network,
   Compass,
-  User
+  User,
+  LogOut
 } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 const mobileItems = [
   { icon: Radio, label: "Feed", href: "/dashboard", color: "#00f0ff" },
@@ -21,26 +23,27 @@ const mobileItems = [
 export function MobileNav() {
   const pathname = usePathname();
   const router = useRouter();
+  const { logout } = useAuth();
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-black/85 backdrop-blur-lg border-t border-white/10 px-4 py-2 flex items-center justify-around pb-safe-bottom">
+    <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-black/85 backdrop-blur-lg border-t border-white/10 px-2 py-1.5 flex items-center justify-around pb-safe-bottom">
       {mobileItems.map((item) => {
         const isActive = pathname === item.href;
         return (
           <button
             key={item.href}
             onClick={() => router.push(item.href)}
-            className="flex flex-col items-center justify-center py-1 px-3 relative transition-all duration-300 select-none cursor-pointer"
+            className="flex flex-col items-center justify-center py-0.5 px-1.5 relative transition-all duration-300 select-none cursor-pointer"
           >
             <item.icon 
-              className="w-5 h-5 mb-0.5 transition-transform duration-300"
+              className="w-4 h-4 mb-0.5 transition-transform duration-300"
               style={{
                 color: isActive ? item.color : "rgba(255, 255, 255, 0.4)",
                 transform: isActive ? "scale(1.1)" : "scale(1)"
               }}
             />
             <span 
-              className="text-[9px] font-mono tracking-wider uppercase transition-colors"
+              className="text-[8px] font-mono tracking-wider uppercase transition-colors"
               style={{
                 color: isActive ? "#ffffff" : "rgba(255, 255, 255, 0.3)"
               }}
@@ -60,6 +63,23 @@ export function MobileNav() {
           </button>
         );
       })}
+
+      {/* Logout / Exit Network */}
+      <button
+        onClick={logout}
+        className="flex flex-col items-center justify-center py-0.5 px-1.5 relative transition-all duration-300 select-none cursor-pointer group"
+      >
+        <LogOut
+          className="w-4 h-4 mb-0.5 transition-all duration-300 group-active:scale-90"
+          style={{ color: "rgba(244, 63, 94, 0.6)" }}
+        />
+        <span
+          className="text-[8px] font-mono tracking-wider uppercase"
+          style={{ color: "rgba(244, 63, 94, 0.5)" }}
+        >
+          Exit
+        </span>
+      </button>
     </div>
   );
 }

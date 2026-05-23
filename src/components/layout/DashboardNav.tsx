@@ -24,7 +24,7 @@ const navItems = [
   { icon: Compass, label: "Mission Pathways", href: "/dashboard/pathways" },
   { icon: Activity, label: "Reality Index", href: "/dashboard/reality-index" },
   { icon: Network, label: "Intelligence Hub", href: "/dashboard/intelligence" },
-  { icon: User, label: "Operator Dossier", href: "/dashboard/profile" },
+  { icon: User, label: "My Profile", href: "/dashboard/profile" },
 ];
 
 export function DashboardNav() {

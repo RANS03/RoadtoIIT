@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { 
@@ -84,6 +84,20 @@ export function FeedPostCard({
   const [isChallenging, setIsChallenging] = useState(false);
   const [dissentText, setDissentText] = useState("");
   const [localDissent, setLocalDissent] = useState<{ author: string; content: string } | undefined>(post.dissentingLog);
+
+  // Mobile detection
+  const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const handleRepost = () => {
     const authorAlias = post.isAnonymous ? "anonymous_operator" : (post.author?.name || "anonymous_operator");
@@ -275,17 +289,19 @@ export function FeedPostCard({
     onReact(post.id, "👁️");
   };
 
-  const charLimit = post.featured ? 380 : 220;
-  const isLongContent = post.content.length > charLimit && post.variant !== "quote";
+  const targetCharLimit = (mounted && isMobile)
+    ? (post.featured ? 180 : 120)
+    : (post.featured ? 380 : 220);
+  const isLongContent = post.content.length > targetCharLimit && post.variant !== "quote";
   const displayContent = isExpanded || !isLongContent 
     ? post.content 
-    : `${post.content.substring(0, charLimit)}...`;
+    : `${post.content.substring(0, targetCharLimit)}...`;
 
   // Render Quote Variant Card
   if (post.variant === "quote") {
     return (
       <GlassCard 
-        className={`p-7 relative border hover:border-white/10 transition-all duration-500 overflow-hidden ${
+        className={`pl-5 pr-4 py-4 md:p-7 relative border hover:border-white/10 transition-all duration-500 overflow-hidden ${
           !disableCardLink ? "cursor-pointer hover:shadow-[0_0_40px_rgba(139,92,246,0.04)]" : ""
         }`}
         style={{ borderColor: "rgba(139,92,246,0.15)", background: "rgba(139,92,246,0.02)" }}
@@ -295,7 +311,7 @@ export function FeedPostCard({
           }
         }}
       >
-        <div className="absolute top-0 left-0 bottom-0 w-[3px] bg-[#8b5cf6]" />
+        <div className="absolute top-0 left-0 bottom-0 w-0.5 bg-[#8b5cf6] opacity-50" />
 
         {post.repostSource && (
           <div className="mb-3 px-3 py-1.5 bg-white/[0.02] border border-white/5 rounded-lg font-mono text-[8px] uppercase tracking-wider text-white/40 flex items-center gap-1.5 select-none w-fit pl-2">
@@ -390,10 +406,10 @@ export function FeedPostCard({
 
   // Render Featured / Standard / Compact layout configurations
   const paddingClass = post.featured 
-    ? "p-4 md:p-9" 
+    ? "p-3.5 md:p-9" 
     : post.variant === "compact" 
-      ? "p-4 md:p-5" 
-      : "p-4 md:p-7";
+      ? "p-2.5 md:p-5" 
+      : "p-3 md:p-7";
 
   return (
     <GlassCard 
@@ -415,8 +431,13 @@ export function FeedPostCard({
     >
       {/* Decorative vertical category accent line */}
       <div 
-        className="absolute left-0 top-0 bottom-0 w-[3.5px]"
+        className="absolute left-0 top-0 bottom-0 w-0.5 opacity-50"
         style={{ backgroundColor: style.color }}
+      />
+      {/* Top glow sweep */}
+      <div
+        className="absolute top-0 left-0 right-0 h-px opacity-25"
+        style={{ background: `linear-gradient(to right, transparent, ${style.color}60, transparent)` }}
       />
 
       {/* Featured Header Badge */}
@@ -425,6 +446,9 @@ export function FeedPostCard({
           Featured System Broadcast
         </div>
       )}
+
+      {/* Content wrapper — pushes all content clear of the left accent bar on mobile */}
+      <div className="pl-4 md:pl-0">
 
       {post.repostSource && (
         <div className="mb-4 px-3 py-1.5 bg-white/[0.02] border border-white/5 rounded-lg font-mono text-[8px] uppercase tracking-wider text-white/40 flex items-center gap-1.5 select-none w-fit pl-2">
@@ -448,7 +472,7 @@ export function FeedPostCard({
       )}
 
       {/* Card Header */}
-      <div className={`flex flex-wrap items-start justify-between gap-3 mb-4 pl-1 ${post.variant === "compact" ? "mb-3" : ""}`}>
+      <div className={`flex flex-col md:flex-row md:items-start justify-between gap-3 mb-3 md:mb-4`}>
         <div 
           className={`flex items-center gap-3 ${(!post.isAnonymous && post.author) ? "cursor-pointer group/author" : ""}`}
           onClick={(e) => {
@@ -460,7 +484,7 @@ export function FeedPostCard({
         >
           {/* Avatar */}
           <div 
-            className={`${post.variant === 'compact' ? 'w-8 h-8 rounded-lg' : 'w-9 h-9 rounded-xl'} flex items-center justify-center border transition-all`}
+            className={`${post.variant === 'compact' ? 'w-8 h-8 rounded-lg' : 'w-8.5 h-8.5 md:w-9 md:h-9 rounded-xl'} flex items-center justify-center border transition-all`}
             style={{ 
               background: post.isAnonymous ? "rgba(255,255,255,0.02)" : `${style.color}10`,
               borderColor: post.isAnonymous ? "rgba(255,255,255,0.08)" : `${style.color}30`
@@ -478,41 +502,96 @@ export function FeedPostCard({
           </div>
 
           {/* Author metadata */}
-          <div>
-            <div className="flex flex-wrap items-center gap-2">
-              <span className={`font-heading font-medium text-white/80 ${post.variant === 'compact' ? 'text-xs' : 'text-sm'} ${(!post.isAnonymous && post.author) ? "group-hover/author:text-[#00f0ff] transition-colors" : ""}`}>
-                {post.isAnonymous ? "anonymous_operator" : post.author?.name}
-              </span>
-              {post.isAnonymous && (
-                <span className="text-[8px] font-mono uppercase bg-white/5 border border-white/10 px-1 py-0.5 rounded text-white/30 tracking-wider">
-                  Sharded
+          <div className="flex-1">
+            {/* Mobile metadata row stack */}
+            <div className="md:hidden space-y-1">
+              <div className="flex items-center gap-1.5">
+                <span className="font-heading font-medium text-[13px] text-white/80">
+                  {post.isAnonymous ? "anonymous_operator" : post.author?.name}
                 </span>
-              )}
-              {post.verificationLevel ? (
-                <span className={`text-[8px] font-mono uppercase px-1.5 py-0.5 rounded tracking-wider flex items-center gap-1 font-semibold ${
-                  post.verificationLevel === 'MULTI-OPERATOR VERIFIED' 
-                    ? 'bg-purple-500/10 border border-purple-500/30 text-purple-400 shadow-[0_0_8px_rgba(168,85,247,0.15)]'
-                    : post.verificationLevel === 'FIELD CONFIRMED'
-                      ? 'bg-blue-500/10 border border-blue-500/30 text-blue-400'
-                      : 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-400'
-                }`}>
-                  <CheckCircle2 className="w-2.5 h-2.5" /> {post.verificationLevel}
-                </span>
-              ) : post.isVerified ? (
-                <span className="text-[8px] font-mono uppercase bg-emerald-500/10 border border-emerald-500/30 px-1.5 py-0.5 rounded text-emerald-400 tracking-wider flex items-center gap-1 font-semibold">
-                  <CheckCircle2 className="w-2.5 h-2.5" /> Verified
-                </span>
-              ) : null}
+                {post.isAnonymous && (
+                  <span className="text-[7px] font-mono uppercase bg-white/5 border border-white/10 px-1 py-0.2 rounded text-white/30 tracking-wider">
+                    Sharded
+                  </span>
+                )}
+              </div>
+              <div className="text-[9px] text-white/35 font-mono leading-none">
+                {post.isAnonymous ? "DECRYPTED NODE" : `${post.author?.institution} • ${post.author?.branch}`}
+              </div>
+              {/* Mobile badges row below */}
+              <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
+                {post.verificationLevel ? (
+                  <span className={`text-[7px] font-mono uppercase px-1 py-0.2 rounded tracking-wider flex items-center gap-0.5 font-semibold ${
+                    post.verificationLevel === 'MULTI-OPERATOR VERIFIED' 
+                      ? 'bg-purple-500/10 border border-purple-500/30 text-purple-400'
+                      : post.verificationLevel === 'FIELD CONFIRMED'
+                        ? 'bg-blue-500/10 border border-blue-500/30 text-blue-400'
+                        : 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-400'
+                  }`}>
+                    <CheckCircle2 className="w-2 h-2" /> {post.verificationLevel}
+                  </span>
+                ) : post.isVerified ? (
+                  <span className="text-[7px] font-mono uppercase bg-emerald-500/10 border border-emerald-500/30 px-1 py-0.2 rounded text-emerald-400 tracking-wider flex items-center gap-0.5 font-semibold">
+                    <CheckCircle2 className="w-2 h-2" /> Verified
+                  </span>
+                ) : null}
+
+                <div className="flex items-center gap-0.5 font-mono text-[7px] border border-white/5 bg-white/5 rounded px-1.5 py-0.2 select-none">
+                  <span className="text-white/45 uppercase tracking-wider">SQS:</span>
+                  <span className="text-[#00f0ff] font-semibold">{post.usefulnessRank || "B"} ({post.sqsScore || 70})</span>
+                </div>
+
+                <div 
+                  className="flex items-center gap-1 px-1.5 py-0.2 rounded-full border text-[7px] font-mono uppercase tracking-wider"
+                  style={{ 
+                    color: style.color, 
+                    borderColor: `${style.color}30`, 
+                    backgroundColor: `${style.color}08` 
+                  }}
+                >
+                  <TypeIcon className="w-2 h-2" />
+                  {style.label}
+                </div>
+              </div>
             </div>
-            <span className="text-[9px] text-white/35 font-mono">
-              {post.isAnonymous ? "DECRYPTED NODE" : `${post.author?.institution} • ${post.author?.branch}`}
-            </span>
+
+            {/* Desktop metadata inline layout */}
+            <div className="hidden md:block">
+              <div className="flex items-center gap-2">
+                <span className={`font-heading font-medium text-white/80 text-sm ${(!post.isAnonymous && post.author) ? "group-hover/author:text-[#00f0ff] transition-colors" : ""}`}>
+                  {post.isAnonymous ? "anonymous_operator" : post.author?.name}
+                </span>
+                {post.isAnonymous && (
+                  <span className="text-[8px] font-mono uppercase bg-white/5 border border-white/10 px-1 py-0.5 rounded text-white/30 tracking-wider">
+                    Sharded
+                  </span>
+                )}
+                {post.verificationLevel ? (
+                  <span className={`text-[8px] font-mono uppercase px-1.5 py-0.5 rounded tracking-wider flex items-center gap-1 font-semibold ${
+                    post.verificationLevel === 'MULTI-OPERATOR VERIFIED' 
+                      ? 'bg-purple-500/10 border border-purple-500/30 text-purple-400 shadow-[0_0_8px_rgba(168,85,247,0.15)]'
+                      : post.verificationLevel === 'FIELD CONFIRMED'
+                        ? 'bg-blue-500/10 border border-blue-500/30 text-blue-400'
+                        : 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-400'
+                  }`}>
+                    <CheckCircle2 className="w-2.5 h-2.5" /> {post.verificationLevel}
+                  </span>
+                ) : post.isVerified ? (
+                  <span className="text-[8px] font-mono uppercase bg-emerald-500/10 border border-emerald-500/30 px-1.5 py-0.5 rounded text-emerald-400 tracking-wider flex items-center gap-1 font-semibold">
+                    <CheckCircle2 className="w-2.5 h-2.5" /> Verified
+                  </span>
+                ) : null}
+              </div>
+              <span className="text-[9px] text-white/35 font-mono">
+                {post.isAnonymous ? "DECRYPTED NODE" : `${post.author?.institution} • ${post.author?.branch}`}
+              </span>
+            </div>
           </div>
         </div>
 
-        {/* Post Type Pill & Campus context details */}
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="hidden sm:flex flex-col items-end text-right font-mono text-[9px] text-white/20">
+        {/* Desktop context details & pills */}
+        <div className="hidden md:flex flex-wrap items-center gap-3">
+          <div className="flex flex-col items-end text-right font-mono text-[9px] text-white/20">
             {post.campusDetail && (
               <span className="flex items-center gap-1 text-white/35 font-light">
                 <MapPin className="w-3 h-3 text-[#00f0ff]/40 flex-shrink-0" />
@@ -543,19 +622,19 @@ export function FeedPostCard({
       </div>
 
       {/* Post Content */}
-      <div className={`pl-1 mb-5 ${post.variant === 'compact' ? 'mb-4' : ''}`}>
+      <div className={`pl-1 mb-3.5 ${post.variant === 'compact' ? 'mb-2.5' : ''}`}>
         {/* Signal Title */}
         {post.title && (
-          <h4 className="font-heading font-bold text-base text-white mb-2 leading-tight">
+          <h4 className="font-heading font-bold text-[14px] md:text-base text-white mb-1.5 leading-tight">
             {post.title}
           </h4>
         )}
-        <div className={`text-white/70 leading-relaxed font-light ${
+        <div className={`text-white/70 leading-snug md:leading-relaxed font-light ${
           post.featured 
-            ? 'text-sm md:text-base font-normal text-white/80' 
+            ? 'text-[13px] md:text-base font-normal text-white/80' 
             : post.variant === 'compact' 
-              ? 'text-xs' 
-              : 'text-sm'
+              ? 'text-[11px] md:text-xs' 
+              : 'text-[12.5px] md:text-sm'
         } ${post.type === 'survivor-log' ? 'italic font-mono text-white/60 pl-2 border-l border-white/10' : ''}`}>
           {post.type === 'survivor-log' ? <span>"{parseMarkdown(displayContent)}"</span> : parseMarkdown(displayContent)}
         </div>
@@ -568,10 +647,10 @@ export function FeedPostCard({
             e.stopPropagation();
             setIsExpanded(!isExpanded);
           }}
-          className="mt-2 text-[9px] font-mono text-white/40 hover:text-white/70 transition-colors uppercase tracking-wider flex items-center gap-1"
+          className="mt-1.5 md:mt-2 text-[9px] font-mono text-white/40 hover:text-white/70 transition-colors uppercase tracking-wider flex items-center gap-1"
         >
           <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
-          {isExpanded ? "[Condense Entry]" : "[Read Decrypted Log]"}
+          {isExpanded ? "[Condense Signal]" : "[Read Full Signal]"}
         </button>
       )}
 
@@ -809,11 +888,11 @@ export function FeedPostCard({
 
         {/* Tags */}
         {post.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mt-4">
+          <div className="flex items-center gap-1 mt-2.5 md:mt-4 overflow-x-auto scrollbar-none flex-nowrap -mx-1 px-1 md:flex-wrap md:mx-0 md:px-0">
             {post.tags.map((tag) => (
               <span 
                 key={tag} 
-                className="text-[9px] font-mono px-2 py-0.5 rounded bg-white/5 text-white/40 border border-white/5"
+                className="text-[8px] md:text-[9px] font-mono px-1.5 py-0.2 md:px-2 md:py-0.5 rounded bg-white/5 text-white/40 border border-white/5 flex-shrink-0"
               >
                 #{tag.toLowerCase()}
               </span>
@@ -843,19 +922,19 @@ export function FeedPostCard({
           </div>
         )}
 
-      <div className={`flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/5 pl-1 ${post.variant === 'compact' ? 'pt-3' : ''}`}>
+      <div className={`flex items-center justify-between gap-2 pt-2.5 md:pt-4 border-t border-white/5 pl-1 ${post.variant === 'compact' ? 'pt-2' : ''}`}>
         {/* Left: Validation Metrics */}
-        <div className="flex items-center justify-between w-full sm:w-auto gap-3 sm:gap-5">
+        <div className="flex items-center gap-3.5 md:gap-5 flex-shrink-0">
           {/* Resonate validation */}
           <button 
             onClick={(e) => {
               e.stopPropagation();
               onLike(post.id);
             }}
-            className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono transition-colors group"
+            className="flex items-center gap-1 text-[10.5px] md:text-[11px] font-mono transition-colors group"
             style={{ color: post.likedByUser ? "#00f0ff" : "rgba(255,255,255,0.3)" }}
           >
-            <Award className={`w-4 h-4 sm:w-3.5 sm:h-3.5 group-hover:scale-110 transition-transform ${post.likedByUser ? "text-[#00f0ff]" : ""}`} />
+            <Award className={`w-3.5 h-3.5 group-hover:scale-110 transition-transform ${post.likedByUser ? "text-[#00f0ff]" : ""}`} />
             <span className="hidden sm:inline">{post.likedByUser ? "Resonated" : "Resonate"} • </span>
             <span>{post.signalStrength}%</span>
           </button>
@@ -866,9 +945,9 @@ export function FeedPostCard({
               e.stopPropagation();
               setShowComments(!showComments);
             }}
-            className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono text-white/30 hover:text-white/60 transition-colors group"
+            className="flex items-center gap-1 text-[10.5px] md:text-[11px] font-mono text-white/30 hover:text-white/60 transition-colors group"
           >
-            <MessageSquare className="w-4 h-4 sm:w-3.5 sm:h-3.5 group-hover:scale-110 transition-transform" />
+            <MessageSquare className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
             <span className="hidden sm:inline">Responses </span>
             <span>({post.comments.length})</span>
           </button>
@@ -879,10 +958,10 @@ export function FeedPostCard({
               e.stopPropagation();
               onSave(post.id);
             }}
-            className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono transition-colors group"
+            className="flex items-center gap-1 text-[10.5px] md:text-[11px] font-mono transition-colors group"
             style={{ color: post.savedByUser ? "#8b5cf6" : "rgba(255,255,255,0.3)" }}
           >
-            <Bookmark className={`w-4 h-4 sm:w-3.5 sm:h-3.5 group-hover:scale-110 transition-transform ${post.savedByUser ? "fill-[#8b5cf6]" : ""}`} />
+            <Bookmark className={`w-3.5 h-3.5 group-hover:scale-110 transition-transform ${post.savedByUser ? "fill-[#8b5cf6]" : ""}`} />
             <span className="hidden sm:inline">{post.savedByUser ? "Archived" : "Archive"}</span>
           </button>
 
@@ -892,9 +971,9 @@ export function FeedPostCard({
               e.stopPropagation();
               handleRepost();
             }}
-            className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono text-white/30 hover:text-white/60 transition-colors group"
+            className="flex items-center gap-1 text-[10.5px] md:text-[11px] font-mono text-white/30 hover:text-white/60 transition-colors group"
           >
-            <Radio className="w-4 h-4 sm:w-3.5 sm:h-3.5 group-hover:scale-110 transition-transform" />
+            <Radio className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
             <span className="hidden sm:inline">Shard Repost</span>
           </button>
 
@@ -904,23 +983,23 @@ export function FeedPostCard({
               e.stopPropagation();
               setIsChallenging(!isChallenging);
             }}
-            className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono text-white/30 hover:text-white/60 transition-colors group"
+            className="flex items-center gap-1 text-[10.5px] md:text-[11px] font-mono text-white/30 hover:text-white/60 transition-colors group"
           >
-            <ShieldAlert className="w-4 h-4 sm:w-3.5 sm:h-3.5 group-hover:scale-110 transition-transform" />
+            <ShieldAlert className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
             <span className="hidden sm:inline">Challenge</span>
           </button>
         </div>
 
         {/* Right: Quick Emoji Reactions */}
-        <div className="flex items-center gap-1.5 flex-wrap">
-          {post.reactions.map((react) => (
+        <div className="flex items-center gap-1 md:gap-1.5 flex-shrink-0">
+          {post.reactions.slice(0, (mounted && isMobile) ? 2 : undefined).map((react) => (
             <button
               key={react.emoji}
               onClick={(e) => {
                 e.stopPropagation();
                 onReact(post.id, react.emoji);
               }}
-              className={`flex items-center gap-1 px-2 py-0.5 rounded-full border text-[11px] font-mono transition-all ${
+              className={`flex items-center gap-0.5 px-1.5 py-0.2 rounded-full border text-[10px] md:text-[11px] font-mono transition-all ${
                 react.reactedByUser 
                   ? "bg-white/10 text-white border-white/20" 
                   : "bg-white/2 border-white/5 text-white/40 hover:border-white/10 hover:text-white/60"
@@ -1062,6 +1141,7 @@ export function FeedPostCard({
           </motion.div>
         )}
       </AnimatePresence>
+      </div>{/* end content wrapper */}
     </GlassCard>
   );
 }

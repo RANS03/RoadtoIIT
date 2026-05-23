@@ -142,7 +142,7 @@ export default function SignalDetailPage() {
   }
 
   return (
-    <div className="p-6 md:p-10 max-w-6xl mx-auto">
+    <div className="py-6 md:p-10 max-w-6xl mx-auto">
       {/* Back Button / Navigation Header */}
       <div className="mb-8">
         <button
